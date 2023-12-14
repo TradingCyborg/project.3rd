@@ -11,6 +11,25 @@ class Car(Base):
     make = Column(String)
     model = Column(String)
 
+    @property
+    def novel_author(self):
+        return f"{self.title} by {self.author}"
+
+class Customer(Base):
+    __tablename__ = "customer"
+    id = Column(Integer, primary_key=True)
+    first_name = Column(String)
+    last_name = Column("family_name", String)  # Use a column name that is different from the attribute name
+
+class Review(Base):
+    __tablename__ = 'reviews'
+    id = Column(Integer, primary_key=True)
+    content = Column(String)
+    star_rating = Column(Integer)
+    novel_id =  Column(Integer, Foreign('novels.id'))
+    customer_id = Column(Integer, Foreign('customer.id'))
+    novel = relationship("Novel", backref="reviews")
+    customer =
     def __init__(self, make, model):
         self.make = make
         self.model = model
